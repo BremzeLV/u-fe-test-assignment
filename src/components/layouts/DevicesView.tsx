@@ -26,7 +26,7 @@ export function DevicesView() {
 			/>
 
 			{deviceViewType === ViewType.Table ? (
-				<div className="px-8">
+				<div className="px-2 md:px-8">
 					<ProductTable
 						header={["Product Line", "Name"]}
 						items={items}
@@ -34,7 +34,7 @@ export function DevicesView() {
 					/>
 				</div>
 			) : (
-				<div className="px-8 py-4">
+				<div className="px-2 md:px-8 py-4">
 					<ProductGrid items={items} imageGetter={getDeviceImage} />
 				</div>
 			)}
