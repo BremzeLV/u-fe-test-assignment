@@ -13,8 +13,8 @@ export function DevicesView() {
 	const items: ProductCardProps[] = filteredItems.map((device) => ({
 		id: device.id,
 		title: device.product.name,
-		subtitle: device.line.name,
-		badge: device.shortnames.join(", "),
+		subtitle: device.sku,
+		badge: device.line.name,
 		imageUrl: getDeviceImage(device.id, 150),
 	}));
 
