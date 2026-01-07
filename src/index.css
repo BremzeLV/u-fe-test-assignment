@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+	body {
+		margin: 0 auto;
+		font-family: var(--font-ui);
+	}
+
+	:focus-visible {
+		outline: 1px solid var(--color-unifi-n06);
+	}
+
+	.unifi-focus-visible:focus-visible {
+		outline: none;
+		box-shadow: inset 0 0 0 1px var(--color-unifi-n06);
+	}
+
+	.unifi-focus-visible-row:focus-visible {
+		box-shadow:
+			inset 0 -1px 0 0 var(--color-unifi-n06),
+			inset 0 1px 0 0 var(--color-unifi-n06);
+	}
+}
+
+@theme {
+	--color-unifi-n00: #ffffff;
+	--color-unifi-n01: #f9fafa;
+	--color-unifi-n02: #f4f5f6;
+	--color-unifi-n03: #ededf0;
+	--color-unifi-n06: #006fff;
+	--color-unifi-n07: #0059cc;
+	--color-unifi-n08: #838691;
+	--color-unifi-n10: #50565e;
+
+	--color-unifi-t01: rgba(0, 0, 0, 0.85);
+	--color-unifi-t02: rgba(0, 0, 0, 0.65);
+	--color-unifi-t03: #808893;
+
+	--color-unifi-b06: #006fff;
+
+	--color-unifi-r03: #f9b0b2;
+	--color-unifi-r06: #f03a3e;
+
+	--color-unifi-w01: rgba(255, 255, 255, 0.85);
+
+	--font-ui: "UISans", "Lato", system-ui, sans-serif;
+}
+
+@font-face {
+	font-family: "UISans";
+	font-style: normal;
+	font-weight: normal;
+	src: url("./assets/ui-sans-v9-regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "UISans";
+	font-style: normal;
+	font-weight: bold;
+	src: url("./assets/ui-sans-v9-bold.woff2") format("woff2");
+}
