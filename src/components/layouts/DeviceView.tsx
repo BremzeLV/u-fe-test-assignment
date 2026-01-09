@@ -24,33 +24,36 @@ export function DeviceView() {
 
 	const prevNextDevice = getPrevNextDevice(device.id);
 
-	const deviceData: { label: string; value: string | number }[] = [
+	const deviceData = [
 		{ label: "Product Line", value: device.line.name },
 		{ label: "ID", value: device.id },
 		{ label: "Name", value: device.product.name },
-		{ label: "Short Name", value: device.sku },
+		{ label: "Short Name", value: device.shortnames.join(", ") },
+		...(device.unifi?.network?.radios?.na?.maxPower
+			? [
+					{
+						label: "Max. Power",
+						value: `${device.unifi.network.radios.na.maxPower} W`,
+					},
+				]
+			: []),
+		...(device.unifi?.network?.radios?.na?.maxSpeedMegabitsPerSecond
+			? [
+					{
+						label: "Speed",
+						value: `${device.unifi.network.radios.na.maxSpeedMegabitsPerSecond} Mbps`,
+					},
+				]
+			: []),
+		...(device.unifi?.network?.numberOfPorts
+			? [
+					{
+						label: "Number of Ports",
+						value: device.unifi.network.numberOfPorts,
+					},
+				]
+			: []),
 	];
-
-	if (device.unifi?.network?.radios?.na?.maxPower) {
-		deviceData.push({
-			label: "Max. Power",
-			value: device.unifi.network.radios.na.maxPower,
-		});
-	}
-
-	if (device.unifi?.network?.radios?.na?.maxSpeedMegabitsPerSecond) {
-		deviceData.push({
-			label: "Speed",
-			value: `${device.unifi.network.radios.na.maxSpeedMegabitsPerSecond} Mbps`,
-		});
-	}
-
-	if (device.unifi?.network?.numberOfPorts) {
-		deviceData.push({
-			label: "Number of Ports",
-			value: device.unifi.network.numberOfPorts,
-		});
-	}
 
 	return (
 		<>

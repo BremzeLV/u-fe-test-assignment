@@ -1,14 +1,14 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDevicesDomain } from "../useDeviceFunctionality";
-import { fetchDevices } from "../../services/devices/devicesApi";
+import { fetchDevices } from "../../services/api/device/deviceApi";
 
 const DevicesContext = createContext<ReturnType<
 	typeof useDevicesDomain
 > | null>(null);
 
 export function DevicesProvider({ children }: { children: ReactNode }) {
-	const { data, error } = useQuery({
+	const { data, isLoading, error } = useQuery({
 		queryKey: ["devices"],
 		queryFn: fetchDevices,
 	});
@@ -17,6 +17,10 @@ export function DevicesProvider({ children }: { children: ReactNode }) {
 
 	if (error) {
 		return <div>Error loading devices: {error.message}</div>;
+	}
+
+	if (isLoading) {
+		return <div>Loading devices...</div>;
 	}
 
 	return (

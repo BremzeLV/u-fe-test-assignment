@@ -1,19 +1,24 @@
 import { useState, useRef, useEffect } from "react";
 import Search from "../../assets/search.svg?react";
+import { twMerge } from "tailwind-merge";
 
 interface SearchInputProps<T = unknown> {
 	filteredItems: T[];
 	searchQuery: string;
+	className?: string;
 	onSearchChange: (query: string) => void;
 	getName: (item: T) => string;
+	getSubtitle: (item: T) => string;
 	getKey?: (item: T) => string | number;
 }
 
 export function SearchInput<T = unknown>({
 	searchQuery,
 	filteredItems,
+	className,
 	onSearchChange,
 	getName,
+	getSubtitle,
 	getKey,
 }: SearchInputProps<T>) {
 	const [localQuery, setLocalQuery] = useState(searchQuery);
@@ -56,6 +61,28 @@ export function SearchInput<T = unknown>({
 		inputRef.current?.blur();
 	};
 
+	const highlightRegex = new RegExp(`(${localQuery})`, "i");
+	const itemProperties = (item: T, index: number) => {
+		const name = getName(item);
+		const nameParts = name.split(highlightRegex);
+
+		return {
+			name,
+			subtitle: getSubtitle(item),
+			key: getKey ? getKey(item) : index,
+			displayName: nameParts.map((part, i) =>
+				part.toLowerCase() === localQuery.toLowerCase() ? (
+					// order will not change so safe to use index
+					<span key={i} className="font-bold underline">
+						{part}
+					</span>
+				) : (
+					part
+				)
+			),
+		};
+	};
+
 	return (
 		<div className="relative">
 			<div className="relative text-sm text-unifi-n08">
@@ -69,7 +96,10 @@ export function SearchInput<T = unknown>({
 					onChange={handleInputChange}
 					onFocus={() => localQuery.trim() && setIsOpen(true)}
 					placeholder="Search"
-					className="h-8 pl-8 pr-2 bg-unifi-n03 border-0 rounded-sm focus:bg-background unifi-focus-visible"
+					className={twMerge(
+						"w-full h-8 pl-8 pr-2 bg-unifi-n03 border-0 rounded-sm focus:bg-background unifi-focus-visible",
+						className
+					)}
 				/>
 			</div>
 
@@ -79,15 +109,19 @@ export function SearchInput<T = unknown>({
 					className="absolute w-full shadow-lg top-full left-0 bg-unifi-n00 rounded-sm z-50 overflow-y-auto"
 				>
 					{filteredItems.map((item, index) => {
-						const name = getName(item);
-						const key = getKey ? getKey(item) : index;
+						const itemProps = itemProperties(item, index);
+
 						return (
 							<button
-								key={key}
-								onClick={() => handleClick(name)}
-								className="w-full px-2 py-2 text-left text-sm flex items-center gap-3 unifi-focus-visible cursor-pointer hover:bg-unifi-n02"
+								key={itemProps.key}
+								onClick={() => handleClick(itemProps.name)}
+								className="flex-none md:flex items-center justify-between w-full px-2 py-2 text-left text-sm flex items-center gap-3 unifi-focus-visible cursor-pointer hover:bg-unifi-n02"
 							>
-								<span className="truncate">{name}</span>
+								<div className="truncate text-unifi-n10">
+									{itemProps.displayName}
+								</div>
+
+								<div className="text-unifi-t03">{itemProps.subtitle}</div>
 							</button>
 						);
 					})}

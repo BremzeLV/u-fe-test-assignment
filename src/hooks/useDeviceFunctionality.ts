@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ViewType } from "../components/types";
-import type { Device } from "../services/devices/types";
+import type { Device } from "../services/api/device/deviceSchema";
 
 export function useDevicesDomain(devices: Device[]) {
 	const [currentDevicesViewType, setCurrentDevicesViewType] = useState(
 		ViewType.Table
 	);
 
-	const devicesMap = new Map();
-	const devicesIdKeyMap = new Map();
-	const deviceLinesMap = new Map();
+	const { devicesMap, devicesIdKeyMap, deviceLinesMap } = useMemo(() => {
+		const devicesMap = new Map<Device["id"], Device>();
+		const devicesIdKeyMap = new Map<Device["id"], number>();
+		const deviceLinesMap = new Map<
+			Device["line"]["id"],
+			Device["line"]["name"]
+		>();
 
-	devices.forEach((device, index) => {
-		devicesMap.set(device.id, device);
-		devicesIdKeyMap.set(device.id, index);
+		devices.forEach((device, index) => {
+			devicesMap.set(device.id, device);
+			devicesIdKeyMap.set(device.id, index);
 
-		if (!deviceLinesMap.has(device.line.id)) {
-			deviceLinesMap.set(device.line.id, device.line.name);
-		}
-	});
+			if (!deviceLinesMap.has(device.line.id)) {
+				deviceLinesMap.set(device.line.id, device.line.name);
+			}
+		});
+
+		return { devicesMap, devicesIdKeyMap, deviceLinesMap };
+	}, [devices]);
 
 	const getDevice = (id: Device["id"]): Device | null => {
 		return devicesMap.get(id) ?? null;
@@ -34,13 +41,13 @@ export function useDevicesDomain(devices: Device[]) {
 	};
 
 	const getDeviceImage = (id: Device["id"], size: number): string | null => {
-		if (devicesMap.has(id)) {
-			const device = devicesMap.get(id);
+		const device = getDevice(id);
 
-			return `https://images.svc.ui.com/?u=https://static.ui.com/fingerprint/ui/images/${device.id}/default/${device.images.default}.png&w=${size}&q=75`;
+		if (!device) {
+			return null;
 		}
 
-		return null;
+		return `https://images.svc.ui.com/?u=https://static.ui.com/fingerprint/ui/images/${device.id}/default/${device.images.default}.png&w=${size}&q=75`;
 	};
 
 	const setDevicesViewType = (viewType: ViewType) => {

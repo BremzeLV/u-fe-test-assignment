@@ -7,7 +7,9 @@ type FilterConfig<T> = {
 	getCategoryName: (item: T) => string;
 };
 
-const FiltersContext = createContext<unknown>(null);
+const FiltersContext = createContext<ReturnType<
+	typeof useFiltersFunctionality
+> | null>(null);
 
 type FiltersProviderProps<T> = {
 	items: T[];

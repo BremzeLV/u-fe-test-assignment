@@ -17,15 +17,15 @@ export function useFiltersFunctionality<T>(
 
 	const { getSearchableText, getCategoryId, getCategoryName } = config;
 
-	const searchFilteredItems = !searchQuery.trim()
-		? items
-		: items.filter((item) => {
-				const query = searchQuery.toLowerCase().trim();
-				const searchableTexts = getSearchableText(item);
-				return searchableTexts.some((text) =>
-					text.toLowerCase().includes(query)
+	const query = searchQuery.toLowerCase().trim();
+	const searchFilteredItems =
+		query.length === 0
+			? items
+			: items.filter((item) =>
+					getSearchableText(item).some((text) =>
+						text.toLowerCase().includes(query)
+					)
 				);
-			});
 
 	const availableCategories = (() => {
 		const categoriesMap = new Map<string, string>();

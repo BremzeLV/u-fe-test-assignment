@@ -2,17 +2,13 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SearchInput } from "../SearchInput";
-
-type TestItem = {
-	id: string;
-	name: string;
-};
+import type { Device } from "../../../services/api/device/deviceSchema";
 
 describe("SearchInput", () => {
-	const mockItems: TestItem[] = [
-		{ id: "1", name: "Access Point" },
-		{ id: "2", name: "Switch" },
-		{ id: "3", name: "Router" },
+	const mockItems: Partial<Device>[] = [
+		{ id: "1", product: { name: "Access Point" }, shortnames: ["u6-pro"] },
+		{ id: "2", product: { name: "Switch" }, shortnames: ["usw-24"] },
+		{ id: "3", product: { name: "Router" }, shortnames: ["udm-pro"] },
 	];
 
 	it("renders search input with placeholder", () => {
@@ -21,7 +17,8 @@ describe("SearchInput", () => {
 				searchQuery=""
 				filteredItems={mockItems}
 				onSearchChange={vi.fn()}
-				getName={(item) => item.name}
+				getName={(item) => item!.product!.name}
+				getSubtitle={(item) => item!.shortnames![0]}
 			/>
 		);
 
@@ -36,7 +33,8 @@ describe("SearchInput", () => {
 				searchQuery=""
 				filteredItems={mockItems}
 				onSearchChange={handleSearchChange}
-				getName={(item) => item.name}
+				getName={(item) => item!.product!.name}
+				getSubtitle={(item) => item!.shortnames![0]}
 			/>
 		);
 
@@ -51,9 +49,16 @@ describe("SearchInput", () => {
 		render(
 			<SearchInput
 				searchQuery="Access"
-				filteredItems={[{ id: "1", name: "Access Point" }]}
+				filteredItems={[
+					{
+						id: "1",
+						product: { name: "Access Point" },
+						shortnames: ["u6-pro"],
+					},
+				]}
 				onSearchChange={vi.fn()}
-				getName={(item) => item.name}
+				getName={(item) => item!.product!.name}
+				getSubtitle={(item) => item!.shortnames![0]}
 			/>
 		);
 
@@ -61,7 +66,7 @@ describe("SearchInput", () => {
 		await user.click(input);
 
 		await waitFor(() => {
-			expect(screen.getByText("Access Point")).toBeInTheDocument();
+			expect(screen.getByText("Access")).toBeInTheDocument();
 		});
 	});
 
@@ -69,9 +74,12 @@ describe("SearchInput", () => {
 		render(
 			<SearchInput
 				searchQuery="Switch"
-				filteredItems={[{ id: "2", name: "Switch" }]}
+				filteredItems={[
+					{ id: "2", product: { name: "Switch" }, shortnames: ["usw-24"] },
+				]}
 				onSearchChange={vi.fn()}
-				getName={(item) => item.name}
+				getName={(item) => item!.product!.name}
+				getSubtitle={(item) => item!.shortnames![0]}
 			/>
 		);
 
@@ -87,20 +95,21 @@ describe("SearchInput", () => {
 				searchQuery=""
 				filteredItems={mockItems}
 				onSearchChange={handleSearchChange}
-				getName={(item) => item.name}
+				getName={(item) => item!.product!.name}
+				getSubtitle={(item) => item!.shortnames![0]}
 			/>
 		);
 
 		const input = screen.getByPlaceholderText("Search");
 		await user.type(input, "Access");
 
-		const item = await screen.findByText("Access Point");
+		const item = await screen.findByText("Access");
 		await user.click(item);
 
-		expect(handleSearchChange).toHaveBeenCalledWith("Access Point");
+		expect(handleSearchChange).toHaveBeenCalledWith("Access");
 
 		await waitFor(() => {
-			expect(screen.queryByText("Access Point")).not.toBeInTheDocument();
+			expect(screen.queryByText("Access")).not.toBeInTheDocument();
 		});
 	});
 
@@ -111,7 +120,8 @@ describe("SearchInput", () => {
 				searchQuery="Access"
 				filteredItems={mockItems}
 				onSearchChange={vi.fn()}
-				getName={(item) => item.name}
+				getName={(item) => item!.product!.name}
+				getSubtitle={(item) => item!.shortnames![0]}
 			/>
 		);
 
@@ -119,13 +129,13 @@ describe("SearchInput", () => {
 		await user.click(input);
 
 		await waitFor(() => {
-			expect(screen.getByText("Access Point")).toBeInTheDocument();
+			expect(screen.getByText("Access")).toBeInTheDocument();
 		});
 
 		await user.click(document.body);
 
 		await waitFor(() => {
-			expect(screen.queryByText("Access Point")).not.toBeInTheDocument();
+			expect(screen.queryByText("Access")).not.toBeInTheDocument();
 		});
 	});
 });

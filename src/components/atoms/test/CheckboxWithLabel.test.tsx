@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Label } from "../Label";
+import { CheckboxWithLabel } from "../CheckboxWithLabel";
 
-describe("Label", () => {
+describe("CheckboxWithLabel", () => {
 	it("renders checkbox with label", () => {
 		render(
-			<Label
+			<CheckboxWithLabel
 				checked={false}
 				onChange={vi.fn()}
 				label="Product Line"
@@ -24,7 +24,7 @@ describe("Label", () => {
 		const handleChange = vi.fn();
 		const user = userEvent.setup();
 		render(
-			<Label
+			<CheckboxWithLabel
 				checked={false}
 				onChange={handleChange}
 				label="Product Line"
@@ -42,7 +42,7 @@ describe("Label", () => {
 		const handleChange = vi.fn();
 		const user = userEvent.setup();
 		render(
-			<Label
+			<CheckboxWithLabel
 				checked={true}
 				onChange={handleChange}
 				label="Product Line"
@@ -60,7 +60,7 @@ describe("Label", () => {
 
 	it("shows checked state correctly", () => {
 		render(
-			<Label
+			<CheckboxWithLabel
 				checked={true}
 				onChange={vi.fn()}
 				label="Product Line"
@@ -73,7 +73,7 @@ describe("Label", () => {
 
 	it("shows unchecked state correctly", () => {
 		render(
-			<Label
+			<CheckboxWithLabel
 				checked={false}
 				onChange={vi.fn()}
 				label="Product Line"
@@ -86,7 +86,7 @@ describe("Label", () => {
 
 	it("associates label with checkbox via id", () => {
 		render(
-			<Label
+			<CheckboxWithLabel
 				checked={false}
 				onChange={vi.fn()}
 				label="Product Line"

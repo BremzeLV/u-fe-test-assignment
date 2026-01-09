@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useDevicesDomain } from "../useDeviceFunctionality";
-import type { Device } from "../../services/devices/types";
+import type { Device } from "../../services/api/types";
 
 const mockDevices: Device[] = [
 	{

@@ -18,10 +18,10 @@ export function ProductCard({
 }: ProductCardProps) {
 	return (
 		<Link
-			className="group relative rounded-sm border border-unifi-n03 hover:bg-unifi-n01"
+			className="group relative rounded-lg border border-unifi-n03 hover:bg-unifi-n01"
 			to={`/device/${id}`}
 		>
-			<div className="flex items-center justify-center rounded-t-sm bg-unifi-n01 group-hover:bg-unifi-n02">
+			<div className="flex items-center justify-center rounded-t-lg bg-unifi-n01 group-hover:bg-unifi-n02">
 				<div className="absolute rounded-sm bg-unifi-n00 text-unifi-n06 px-1 py-0.5 top-0.75 right-0.75">
 					{badge}
 				</div>

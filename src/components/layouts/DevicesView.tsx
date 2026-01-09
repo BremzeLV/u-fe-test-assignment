@@ -3,7 +3,7 @@ import { ProductGrid } from "../organisms/ProductGrid";
 import { ProductTable } from "../organisms/ProductTable";
 import { DevicesHeader } from "../organisms/DevicesHeader";
 import { useDevices, useFilters } from "../../hooks";
-import type { Device } from "../../services/devices/types";
+import type { Device } from "../../services/api/device/deviceSchema";
 import type { ProductCardProps } from "../molecules/ProductCard";
 
 export function DevicesView() {

@@ -1,11 +1,16 @@
-interface LabelProps {
+interface CheckboxWithLabelProps {
 	checked: boolean;
 	onChange: (checked: boolean) => void;
 	label: string;
 	id?: string;
 }
 
-export function Label({ checked, onChange, label, id }: LabelProps) {
+export function CheckboxWithLabel({
+	checked,
+	onChange,
+	label,
+	id,
+}: CheckboxWithLabelProps) {
 	return (
 		<div className="group flex items-center rounded-sm px-1 focus-within:ring-1 focus-within:ring-unifi-n06">
 			<input
