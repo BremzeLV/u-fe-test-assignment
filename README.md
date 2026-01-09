@@ -1,3 +1,15 @@
+# How to run
+
+- `cp .env.example .env`
+- `npm install`
+- `npm run dev`
+
+# Some comments
+
+- Did not test all of the functionality, just wrote some tests to highlight some of the parts of functionality.
+- Solution is using zod schemas with defaults so that it would not break the whole app when the schema has minor changes.
+- Implementation is using Context providers.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

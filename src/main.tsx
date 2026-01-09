@@ -8,10 +8,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DefaultLayout } from "./components/layouts/DefaultLayout";
 import { DevicesView } from "./components/layouts/DevicesView";
 import { DeviceView } from "./components/layouts/DeviceView";
-import { NotFound } from "./NotFoundView";
+import { NotFound } from "./components/routes/NotFoundView";
 
 import { DevicesProvider } from "./hooks/providers/DevicesProvider";
-import { DeviceRoutesWithProviders } from "./DeviceRoutesWithProviders";
+import { DeviceRoutesWithProviders } from "./components/routes/DeviceRoutesWithProviders";
 
 const queryClient = new QueryClient();
 
