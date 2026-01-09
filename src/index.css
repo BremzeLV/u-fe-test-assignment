@@ -50,12 +50,12 @@
 	font-family: "UISans";
 	font-style: normal;
 	font-weight: normal;
-	src: url("./assets/ui-sans-v9-regular.woff2") format("woff2");
+	src: url("./assets/fonts/ui-sans-v9-regular.woff2") format("woff2");
 }
 
 @font-face {
 	font-family: "UISans";
 	font-style: normal;
 	font-weight: bold;
-	src: url("./assets/ui-sans-v9-bold.woff2") format("woff2");
+	src: url("./assets/fonts/ui-sans-v9-bold.woff2") format("woff2");
 }
