@@ -1,50 +1,32 @@
 import { describe, it, expect } from "vitest";
 import { renderHook } from "@testing-library/react";
 import { useDevicesDomain } from "../useDeviceFunctionality";
-import type { Device } from "../../services/api/types";
+import type { Device } from "../../services/api/device/deviceSchema";
 
 const mockDevices: Device[] = [
 	{
 		id: "device1",
-		deviceType: "access-point",
-		guids: [],
-		icon: { id: "icon1", resolutions: [[10, 10]] },
 		images: { default: "image1" },
 		line: { id: "line1", name: "WiFi 6" },
-		product: { abbrev: "U6", name: "Access Point" },
+		product: { name: "Access Point" },
 		shortnames: ["u6-pro"],
 		sku: "U6-PRO",
-		sysids: [],
-		triplets: [],
-		videos: [],
 	},
 	{
 		id: "device2",
-		deviceType: "switch",
-		guids: [],
-		icon: { id: "icon2", resolutions: [[10, 10]] },
 		images: { default: "image2" },
 		line: { id: "line2", name: "Switches" },
-		product: { abbrev: "USW", name: "Switch" },
+		product: { name: "Switch" },
 		shortnames: ["usw-24"],
 		sku: "USW-24",
-		sysids: [],
-		triplets: [],
-		videos: [],
 	},
 	{
 		id: "device3",
-		deviceType: "router",
-		guids: [],
-		icon: { id: "icon3", resolutions: [[10, 10]] },
 		images: { default: "image3" },
 		line: { id: "line1", name: "WiFi 6" },
-		product: { abbrev: "UDM", name: "Router" },
+		product: { name: "Router" },
 		shortnames: ["udm-pro"],
 		sku: "UDM-PRO",
-		sysids: [],
-		triplets: [],
-		videos: [],
 	},
 ];
 
